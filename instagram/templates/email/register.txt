@@ -1,0 +1,6 @@
+Hello {{name}},
+Thanks for taking time and signing up to instagram. Enjoy all proffesional features and extend your socual Network worldwide.
+Regards.
+
+From:
+Instagram Team
