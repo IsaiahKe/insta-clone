@@ -1,33 +1,27 @@
+from .models import Post
 from django.http.response import HttpResponseRedirect
-from django.shortcuts import render
-from .forms import RegisterForm,LoginForm
-from .models import User
+from django.shortcuts import render,redirect
+from .forms import PostForm
+from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 # Create your views here.
-
-def register(request):
-
-    title="User Registration"
-    
-    form=RegisterForm()
-    if form.is_valid():
-        if request.method=='POST':
-            
-    else:
-        HttpResponseRedirect('register')
-    return render(request,'django_registration/registration_form.html',{"title":title,"form":form})
-
-def login(request):
-    title="User Login"
-    form=LoginForm()
-    if form.is_valid():
-        print('good')
-    else:
-        HttpResponseRedirect("login")
-    return render(request,'django_registration/registration_complete.html',{"title":title,"form":form})
-
-@login_required(login_url='/django_registration/login')
+@login_required(login_url='/accounts/login')
 def index(request):
     
     title="Instagram"
-    return render(request, 'index.html',{'title':title})
+    posts=Post.posts()
+    users= User.objects.exclude(id=request.user.id)
+    return render(request, 'index.html',{'title':title,'users':users,"posts":posts})
+
+@login_required(login_url='/accounts/login')
+def createpost(request):
+    if request.method=="POST":
+        form=PostForm(request.POST,request.FILES)
+        print(form.errors)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.user = request.user.profile
+            post.save()
+            return redirect('index')      
+    form=PostForm()
+    return render(request,'post.html',{"postform":form})
