@@ -1,4 +1,4 @@
-{%extends "base.html"%}{% load bootstrap3 %} {% block content %}
+{%extends "django_registration/base.html"%}{% load bootstrap4 %} {% block content %}
 <div class="container-fluid">
   <div class="col-8">
     <!-- Empty div -->
@@ -12,19 +12,19 @@
           <h3 class="text-center">User Registration</h3>
         </div>
         <div class="panel-body">
-          <form action="" method="post">
+          <form method="post" action="/accounts/register/">
             {% csrf_token %} {% bootstrap_form form %}
-            <div class="form-group">
+            <div class="form-group" style="float:right;">
               <input
                 type="submit"
-                class="btn btn-primary btn-sm"
+                class="btn btn-primary btn-sm btn-md"
                 value="Continue"
               />
             </div>
 
             <input type="hidden" name="next" value="{{next}}" />
           </form>
-          <div class="row text-center"> Have an account? <span ><a href="/accounts/login">Login</a></span></div>
+           <div class="row" style="padding-left: 20px"> Have an account? <span ><a href="/accounts/login/">Login</a></span></div>
         </div>
       </div>
     </div>
