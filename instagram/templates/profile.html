@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% load bootstrap_icons %}
+{% block content %}
+
+<div class="container">
+<div class="col-md-12" style="height:200px;">
+<div class="row">
+<div class="col-md-2">
+<div class="avatar rounded-circle" style="height:150px;width:150px;background-image:url({{profile.photo.url}});background-size:cover;border:1px solid;"></div>
+</div>
+<div class="col-md-1"></div>
+<div class="col-md-8">
+<div class="col-md-7">
+<div class="row" style="padding-top:20px;"><span style="font-weight:bold">{{currentuser|title}}<span></div>
+<div class="row">{{currentuser.email}}
+<div class="col-sm-1"></div><a href="/profile/update/{{currentuser.id}}/"<button class="btn btn-success">Edit</button></a></div>
+<div class="row">
+<div class="col-md-3">Posts</div>
+<div class="col-md-3">Following</div>
+<div class="col-md-3">Followers</div>
+</div>
+<div class="row">{{currentuser.first_name|title}} {{currentuser.last_name|title}}</div>
+</div>
+</div>
+</div>
+
+<hr/>
+</div>
+<div class="row"
+<div class="col-md-12" style="height:30px;display:flex;flex-direction:row;justify-content:center">
+<div class="col-xsm-2"style="margin-left:10px">
+{%bs_icon 'grid-3x3' size="1.25em"%}<span style="font-weight:bold">POSTS</span></div>
+<div class="col-xsm-2"style="margin-left:10px">
+{%bs_icon 'easel' size="1.25em"%}<span style="font-weight:bold">IGTV</span></div>
+<div class="col-xsm-2"style="margin-left:10px">
+{%bs_icon 'bookmark' size="1.25em"%}<span style="font-weight:bold">SAVED</span></div>
+<div class="col-xsm-2"style="margin-left:10px">
+{%bs_icon 'file-person' size="1.25em"%}<span style="font-weight:bold">TAGGED</span></div>
+</div></div>
+<div class="container" style="display:flex;flex-direction:row;justify-content:space-between;flex-wrap:wrap;justify">
+{% if images %}
+{% for image in images %}
+<div class="col-md-3" style="background:blue;height:280px;margin-right:20px">
+<img src='{{image.url}}' height='280px' width='100%'>
+</div>
+{% endfor %}
+{% else %}
+No images!
+{% endif %}
+</div>
+{% endblock  %}
