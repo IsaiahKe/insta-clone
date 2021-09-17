@@ -38,7 +38,7 @@ def comment(request,id):
 @login_required(login_url='/accounts/login')
 def showprofile(request,id):
     currentuser=User.objects.get(pk=id)
-    profile=Profile.objects.get(pk=id)
+    profile=Profile.objects.filter(user_id=id)
     image=Post.objects.filter(user_id=id)
     print(image)
     return render(request,'profile.html',{"images":image,"currentuser":currentuser,'profile':profile})
@@ -56,3 +56,9 @@ def updateprofile(request,id):
        form=ProfileForm()
        form2=UpdateUserForm()
     return render(request,'updateprofile.html',{'form':form,"form2":form2})
+
+@login_required(login_url="/accounts/login/")
+def showcomments(request,id):
+    comments=Comment.objects.filter(post_id=id)
+    
+    return render(request,"comment.html",{"comments":comments})

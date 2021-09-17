@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block  content%}
+<div class="container">
+<div class="card col-8">
+<div class="card-header">Post</div>
+<div class="card-body">
+{% if comments %}
+{% for comment in comments %}
+<div class="row">
+<div class="col-md-2">{{comment.}}</div>
+{% endfor %}
+{% else %}
+<div class="row"><span style="color:red">No comments</span></div>
+{% endif %}
+</div>
+<div class="card-footer"></div>
+</div>
+</div>
+</div>
+{% endblock %}

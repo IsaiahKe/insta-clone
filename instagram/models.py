@@ -1,4 +1,5 @@
 from cloudinary.models import CloudinaryField
+from django import forms
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models.signals import post_save
@@ -38,17 +39,18 @@ class Profile(models.Model):
     def __str__(self):
         return self.name
 class Follow(models.Model):
-    followed=models.ForeignKey(Profile,on_delete=models.CASCADE,related_name='followers'),
-    following=models.ForeignKey(Profile,on_delete=models.CASCADE,related_name='following')
-    
-    
+    follower = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='following')
+    followed = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='followers')
+
+    def __str__(self):
+        return f'{self.follower} Follow'
     def __str__(self):
         return f'{self.follower} Follower'
     
 class Comment(models.Model):
     comment = models.TextField()
     user = models.ForeignKey('Profile',on_delete=models.CASCADE,related_name='comment')
-    photo = models.ForeignKey('Post',on_delete=models.CASCADE,related_name='comment')
+    post = models.ForeignKey('Post',on_delete=models.CASCADE,related_name='comment')
 
     class Meta:
         ordering = ["-pk"]

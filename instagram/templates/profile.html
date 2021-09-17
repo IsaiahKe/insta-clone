@@ -7,7 +7,8 @@
 <div class="col-md-12" style="height:200px;">
 <div class="row">
 <div class="col-md-2">
-<div class="avatar rounded-circle" style="height:150px;width:150px;background-image:url({{profile.photo.url}});background-size:cover;border:1px solid;"></div>
+<div class="avatar rounded-circle" style="height:150px;width:150px;background-image:url('{{currentuser.profile.photo.url}}');background-size:cover;border:1px solid;background:gray;"></div>
+
 </div>
 <div class="col-md-1"></div>
 <div class="col-md-8">
@@ -16,18 +17,18 @@
 <div class="row">{{currentuser.email}}
 <div class="col-sm-1"></div><a href="/profile/update/{{currentuser.id}}/"<button class="btn btn-success">Edit</button></a></div>
 <div class="row">
-<div class="col-md-3">Posts</div>
-<div class="col-md-3">Following</div>
-<div class="col-md-3">Followers</div>
+<div class="col-md-3">{{images.count|title}} Posts</div>
+<div class="col-md-4">{{images.count|title}} Following</div>
+<div class="col-md-4">{{images.count|title}} Followers</div>
 </div>
-<div class="row">{{currentuser.first_name|title}} {{currentuser.last_name|title}}</div>
+<div class="row">{{currentuser.profile.first_name|title}} {{currentuser.profile.last_name|title}}</div>
 </div>
 </div>
 </div>
 
 <hr/>
 </div>
-<div class="row"
+<div class="row">
 <div class="col-md-12" style="height:30px;display:flex;flex-direction:row;justify-content:center">
 <div class="col-xsm-2"style="margin-left:10px">
 {%bs_icon 'grid-3x3' size="1.25em"%}<span style="font-weight:bold">POSTS</span></div>
@@ -48,5 +49,6 @@
 {% else %}
 No images!
 {% endif %}
+
 </div>
 {% endblock  %}
