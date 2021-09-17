@@ -1,31 +1,60 @@
-from typing import BinaryIO
+from cloudinary.models import CloudinaryField
+from django.contrib.auth.models import User
 from django.db import models
-from django.forms.widgets import PasswordInput
-from django.utils import timezone
-from django.db.models.fields import CharField
-from tinymce.models import HTMLField
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
 # Create your models here.
-class User(models.Model):
-    first_name=models.CharField(max_length=20)
-    surname= models.CharField(max_length=20)
-    email=models.EmailField(max_length=30)
-    password=models.CharField(max_length=50)
-    confirm_password=models.CharField(max_length=30,)
-   
-    rdate=models.DateField(default=timezone.now)
-    followers=models.SmallIntegerField(default=0)
-    following=models.SmallIntegerField(default=0)
-    
+class Post(models.Model):
+    name= models.CharField(max_length=20)
+    user=models.ForeignKey('Profile',on_delete=models.CASCADE,related_name='images')
+    caption=models.TextField(max_length=254)
+    image=CloudinaryField('image')
+    likes=models.IntegerField(default=0)
     def __str__(self):
-        return self.username
+        return self.user
     def save_user(self):
         self.save()
+    @classmethod
+    def posts(cls):
+        posts=cls.objects.all()
+        return posts
+    
         
-class UserInfo(models.Model):
-    bio=HTMLField()
-    nickname=models.CharField(max_length=15)
-    phone=models.IntegerField()
-    profilephoto=models.ImageField()
+class Profile(models.Model):
+    bio=models.TextField(max_length=500)
+    user=models.OneToOneField(User,on_delete=models.CASCADE,related_name='profile',null=True)
+    name=models.CharField(max_length=20,blank=True)
+    photo=CloudinaryField('image')
+    
+    @receiver(post_save,sender=User)
+    def create_user_profile(sender, instance, created, **kwargs):
+        if created:
+            Profile.objects.create(user=instance)
+            
+    @receiver(post_save, sender=User)
+    def save_user_profile(sender, instance, **kwargs):
+	    instance.profile.save()
+    def __str__(self):
+        return self.name
+class Follow(models.Model):
+    followed=models.ForeignKey(Profile,on_delete=models.CASCADE,related_name='followers'),
+    following=models.ForeignKey(Profile,on_delete=models.CASCADE,related_name='following')
+    
     
     def __str__(self):
-        self.nickname
+        return f'{self.follower} Follower'
+    
+class Comment(models.Model):
+    comment = models.TextField()
+    user = models.ForeignKey('Profile',on_delete=models.CASCADE,related_name='comment')
+    photo = models.ForeignKey('Post',on_delete=models.CASCADE,related_name='comment')
+
+    class Meta:
+        ordering = ["-pk"]
+
+    def __str__(self):
+        return f'{self.user.name} Post'
+    def savecomment(self):
+        self.save()
+    
