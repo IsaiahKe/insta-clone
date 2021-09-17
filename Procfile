@@ -1,1 +1,1 @@
-web: gunicorn igapp.wsgi --log-file
+web: gunicorn igapp.wsgi --log-file -
