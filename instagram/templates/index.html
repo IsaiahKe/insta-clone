@@ -3,12 +3,17 @@
 {% load bootstrap_icons %}
 {% block content %}
 <div class="container-fluid" style="margin:0px auto;">
-
+<div class="row" style="height:20px;"></div>
 <div class="container text-center" style="height:inherit;display:flex;display-direction:row;">
 <div class="col-md-2"></div>
 <div class="col-md-3"><h2>Instagram</h2></div>
 <div class="col-md-3"> <form><input class="form-group" placeholder="Search" style="width:80%;margin-top:20px;margin-0px auto;"></form></div>
-<div class="col-md-3"><h2>more</h2></div>
+<div class="col-md-1" style="cursor:pointer">{%bs_icon 'house' size='2em'%}</div>
+<div class="col-md-1"style="cursor:pointer">{%bs_icon 'cursor' size='2em'%}</div>
+<div class="col-md-1" style="cursor:pointer">{%bs_icon 'suit-heart' size='2em'%}</div>
+<div class="col-md-1">
+<div class="avatar rounded-circle" style="background:gray;height:30px;width:30px;background-image:url({{user.profile.photo.url}});background-size:cover;"></div>
+</div>
 </div>
 <hr/>
 </div>
@@ -32,9 +37,9 @@
 <div class="card-body" style="background:#f0f0f0;height:500px;width:500px;width:100%;"><img src="{{post.image.url}}" height='100%' width='450px' class="image-reponsive"></div>
 <div class="card-footer" style="height:160px;">
 <div class="row">
-<div class="col-sm-1" style="cursor:pointer" onclick=addlike({{post.id}})>{%bs_icon 'heart' size='1.5em'%}</div>
+<div class="col-sm-1 " style="cursor:pointer;color:none;" onclick=addlike({{post.id}})><span class="{{post.id}}k" style="color:none">{%bs_icon 'heart' size='1.5em'%}</span></div>
 
-<div class="col-sm-1" style="cursor:pointer">{%bs_icon 'chat' size='1.5em'%}</div>
+<div class="col-sm-1"style="cursor:pointer">{%bs_icon 'chat' size='1.5em'%}</div>
 <div class="col-md-1" style="cursor:pointer">{%bs_icon 'cursor' size='1.5em'%}</div>
 
 </div>
@@ -44,8 +49,11 @@
 var count=0
 function addlike(id){
     
+    console.log(id)
     count=count+1
     document.getElementById(id).innerHTML=count+" Likes";
+   // document.getElementsByClassName(id).style.fontColor='red'
+
 }
 </script>
 {% endblock  %}
