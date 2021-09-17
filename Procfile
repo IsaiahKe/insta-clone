@@ -1,2 +1,1 @@
-web: gunicorn igapp.wsgi --log-file -o
-r
+web: gunicorn igapp.wsgi --log-file
