@@ -3,20 +3,22 @@
 
 {% block  content%}
 <div class="container">
-<div class="card col-8">
-<div class="card-header">Post</div>
-<div class="card-body">
+<div class="card col-8" style="height:auto;">
+<div class="card-header">{{post.caption|title}}</div>
+<div class="card-body" style="height:auto;">
+<div class="row"><img src="{{post.image.url}}"class="responsive-image" height:'200px' width:'250px'></div>
 {% if comments %}
 {% for comment in comments %}
-<div class="row">
-<div class="col-md-2">{{comment.}}</div>
+<div class="row" style="width:100%;height:auto;background:f0f0f0;display:flex;flex-direction:row;">
+<div class="" style="font-weight:bold;margin-right:5px">{{comment.user|title}}</div>
+<div class="">{{comment.comment}}</div>
+</div>
 {% endfor %}
 {% else %}
 <div class="row"><span style="color:red">No comments</span></div>
 {% endif %}
 </div>
-<div class="card-footer"></div>
-</div>
+
 </div>
 </div>
 {% endblock %}
