@@ -1,6 +1,6 @@
 ## Description
 
-This is a python project thal allows a admin to upload and paste photos. it uses django as framework
+This is a python project thal allows that mimics instagram and it utilizes django registration odule
 
 ## Requirements
 
