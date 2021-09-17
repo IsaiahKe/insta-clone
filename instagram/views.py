@@ -60,5 +60,5 @@ def updateprofile(request,id):
 @login_required(login_url="/accounts/login/")
 def showcomments(request,id):
     comments=Comment.objects.filter(post_id=id)
-    
-    return render(request,"comment.html",{"comments":comments})
+    post=Post.objects.get(pk=id)
+    return render(request,"comment.html",{"comments":comments,"post":post})
